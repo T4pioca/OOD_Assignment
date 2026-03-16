@@ -8,9 +8,10 @@ public class login {
     public static void main(String[] args) {
 
         JFrame frame = new JFrame("Login Page");
-        frame.setSize(350, 200);
+        frame.setSize(350, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
+        frame.setLocationRelativeTo(null);
 
         JLabel userLabel = new JLabel("Username:");
         userLabel.setBounds(30, 30, 80, 25);
@@ -39,10 +40,24 @@ public class login {
         registerButton.setForeground(java.awt.Color.BLUE);
         frame.add(registerButton);
         
+        JButton forgotButton = new JButton("Forgot Password?");
+        forgotButton.setBounds(105, 180, 140, 25);
+        forgotButton.setBorderPainted(false);
+        forgotButton.setContentAreaFilled(false);
+        forgotButton.setForeground(java.awt.Color.RED);
+        frame.add(forgotButton);
+
+        forgotButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new forgot_password();
+            }
+        });
+        
         registerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();          // close login page
-                new register_user();     // open register page
+                frame.dispose();        
+                new register_user();   
             }
         });
 
@@ -61,7 +76,7 @@ public class login {
                     while ((line = reader.readLine()) != null) {
                         String[] user = line.split(",");
 
-                        if (user[0].equals(username) && user[1].equals(password)) {
+                        if (user.length >= 3 && user[1].equals(username) && user[2].equals(password)) {
                             loginSuccess = true;
                             break;
                         }
