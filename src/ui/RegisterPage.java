@@ -1,10 +1,12 @@
+package ui;
+
 import javax.swing.*;
 import java.awt.event.*;
-import java.io.*;
+import service.AuthService;
 
-public class register_user {
+public class RegisterPage {
 
-    public register_user() {
+    public RegisterPage() {
         JFrame frame = new JFrame("Register Page");
         frame.setSize(450, 480);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -54,16 +56,16 @@ public class register_user {
         JTextField emailText = new JTextField();
         emailText.setBounds(170, 220, 200, 25);
         frame.add(emailText);
-        
+
         JLabel questionLabel = new JLabel("Security Question:");
         questionLabel.setBounds(50, 260, 120, 25);
         frame.add(questionLabel);
 
         String[] questions = {
-                "What is your favourite color?",
-                "What is your pet's name?",
-                "What city were you born in?",
-                "What is your favourite food?"
+            "What is your favourite color?",
+            "What is your pet's name?",
+            "What city were you born in?",
+            "What is your favourite food?"
         };
 
         JComboBox<String> questionBox = new JComboBox<>(questions);
@@ -95,6 +97,7 @@ public class register_user {
                 String email = emailText.getText().trim();
                 String securityQuestion = (String) questionBox.getSelectedItem();
                 String securityAnswer = answerText.getText().trim();
+                String role = "Customer";
 
                 if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()
                         || phone.isEmpty() || email.isEmpty() || securityAnswer.isEmpty()) {
@@ -107,34 +110,17 @@ public class register_user {
                     return;
                 }
 
-                File folder = new File("data");
-                folder.mkdirs();
+                AuthService authService = new AuthService();
+                boolean success = authService.register(
+                    username, password, phone, email, securityQuestion, securityAnswer, role
+                );
 
-                File file = new File("data/users.txt");
-
-                try {
-                    if (!file.exists()) {
-                        file.createNewFile();
-                    }
-
-                    if (isUsernameExists(username, file)) {
-                        JOptionPane.showMessageDialog(frame, "Username already exists.");
-                        return;
-                    }
-
-                    int newId = getNextUserId(file);
-
-                    FileWriter writer = new FileWriter(file, true);
-                    writer.write(newId + "," + username + "," + password + "," + phone + "," + email + "," + securityQuestion + "," + securityAnswer + "\n");
-                    writer.close();
-
+                if (success) {
                     JOptionPane.showMessageDialog(frame, "Registration successful!");
-
                     frame.dispose();
-                    login.main(null);
-
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(frame, "Error saving user data.");
+                    new LoginPage();
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Username already exists or save failed.");
                 }
             }
         });
@@ -142,42 +128,10 @@ public class register_user {
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                login.main(null);
+                new LoginPage();
             }
         });
 
         frame.setVisible(true);
-    }
-
-    private boolean isUsernameExists(String username, File file) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        String line;
-
-        while ((line = reader.readLine()) != null) {
-            String[] user = line.split(",");
-            if (user.length >= 2 && user[1].equalsIgnoreCase(username)) {
-                reader.close();
-                return true;
-            }
-        }
-
-        reader.close();
-        return false;
-    }
-
-    private int getNextUserId(File file) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        String line;
-        int lastId = 0;
-
-        while ((line = reader.readLine()) != null) {
-            String[] user = line.split(",");
-            if (user.length >= 1) {
-                lastId = Integer.parseInt(user[0]);
-            }
-        }
-
-        reader.close();
-        return lastId + 1;
     }
 }

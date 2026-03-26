@@ -1,0 +1,49 @@
+package ui;
+
+import javax.swing.*;
+
+public class ManagerMenu {
+
+    public ManagerMenu(String username) {
+
+        JFrame frame = new JFrame("Manager Menu");
+        frame.setSize(500, 380);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(null);
+        frame.setLocationRelativeTo(null);
+
+        // Welcome Label
+        JLabel welcomeLabel = new JLabel("Welcome Manager, " + username);
+        welcomeLabel.setBounds(120, 30, 300, 25);
+        frame.add(welcomeLabel);
+
+        // Buttons
+        JButton btnManageStaff = new JButton("Manage Staff (CRUD)");
+        btnManageStaff.setBounds(150, 80, 200, 30);
+        frame.add(btnManageStaff);
+
+        JButton btnSetPrice = new JButton("Set Service Prices");
+        btnSetPrice.setBounds(150, 120, 200, 30);
+        frame.add(btnSetPrice);
+
+        JButton btnFeedback = new JButton("View Feedbacks");
+        btnFeedback.setBounds(150, 160, 200, 30);
+        frame.add(btnFeedback);
+
+        JButton btnReport = new JButton("View Reports");
+        btnReport.setBounds(150, 200, 200, 30);
+        frame.add(btnReport);
+
+        JButton btnLogout = new JButton("Logout");
+        btnLogout.setBounds(150, 240, 200, 30);
+        frame.add(btnLogout);
+
+        // Logout action
+        btnLogout.addActionListener(e -> {
+            frame.dispose();
+            new LoginPage();
+        });
+
+        frame.setVisible(true);
+    }
+}

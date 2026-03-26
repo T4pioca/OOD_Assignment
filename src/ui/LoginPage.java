@@ -1,12 +1,14 @@
+package ui;
+
 import javax.swing.*;
-import java.awt.event.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import service.AuthService;
+import model.User;
 
-public class login {
-    public static void main(String[] args) {
+public class LoginPage {
 
+    public LoginPage() {
         JFrame frame = new JFrame("Login Page");
         frame.setSize(350, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,14 +34,14 @@ public class login {
         JButton loginButton = new JButton("Login");
         loginButton.setBounds(120, 110, 100, 30);
         frame.add(loginButton);
-        
+
         JButton registerButton = new JButton("New user? Register here");
         registerButton.setBounds(90, 150, 180, 25);
         registerButton.setBorderPainted(false);
         registerButton.setContentAreaFilled(false);
         registerButton.setForeground(java.awt.Color.BLUE);
         frame.add(registerButton);
-        
+
         JButton forgotButton = new JButton("Forgot Password?");
         forgotButton.setBounds(105, 180, 140, 25);
         forgotButton.setBorderPainted(false);
@@ -50,46 +52,45 @@ public class login {
         forgotButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new forgot_password();
+                new ForgotPasswordPage();
             }
         });
-        
+
         registerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();        
-                new register_user();   
+                frame.dispose();
+                new RegisterPage();
             }
         });
 
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                String username = userText.getText().trim();
+                String password = new String(passText.getPassword()).trim();
 
-                String username = userText.getText();
-                String password = new String(passText.getPassword());
+                AuthService authService = new AuthService();
+                User user = authService.login(username, password);
 
-                boolean loginSuccess = false;
+                if (user != null) {
+                    String role = user.getRole();
+                    String name = user.getUsername();
 
-                try {
-                    BufferedReader reader = new BufferedReader(new FileReader("data/users.txt"));
-                    String line;
+                    JOptionPane.showMessageDialog(frame, "Welcome " + name);
 
-                    while ((line = reader.readLine()) != null) {
-                        String[] user = line.split(",");
+                    frame.dispose();
 
-                        if (user.length >= 3 && user[1].equals(username) && user[2].equals(password)) {
-                            loginSuccess = true;
-                            break;
-                        }
+                    if (role.equals("Manager")) {
+                        new ManagerMenu(name);
+                    } else if (role.equals("CounterStaff")) {
+                        new CounterStaffMenu(name);
+                    } else if (role.equals("Technician")) {
+                        new TechnicianMenu(name);
+                    } else if (role.equals("Customer")) {
+                        new CustomerMenu(name);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Unknown role!");
                     }
 
-                    reader.close();
-
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(frame, "Error reading file");
-                }
-
-                if (loginSuccess) {
-                    JOptionPane.showMessageDialog(frame, "Login Successful!");
                 } else {
                     JOptionPane.showMessageDialog(frame, "Invalid Username or Password!");
                 }
