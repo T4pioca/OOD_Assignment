@@ -78,6 +78,14 @@ public class User {
         this.role = role;
     }
     
+    public void setSecurityQuestion(String securityQuestion) {
+    	this.securityQuestion = securityQuestion;
+    }
+    
+    public void setSecurityAnswer(String securityAnswer) {
+    	this.securityAnswer = securityAnswer;
+    }
+    
     public void setStatus(String status) {
     	this.status = status;
     }

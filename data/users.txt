@@ -1,5 +1,5 @@
 1|Apple|1234|0123456789|apple@gmail.com|What is your pet's name?|lucky|Manager|Active
-2|Banana|1234|0123456789|banana@gmail.com|What is your favourite color?|yellow|CounterStaff|Active
+2|Banana|1234|0123456789|banana@gmail.com|What is your pet's name?|blue|CounterStaff|Active
 3|Cat|1234|0112223333|cat@gmail.com|What is your favourite food?|fish|Technician|Active
 4|Dog|1234|0129876543|dog@gmail.com|What city were you born in?|kl|Customer|Active
 5|Elephant|1234|0142345363|elephant@gmail.com|What is your pet's name?|Lucky|Customer|Active

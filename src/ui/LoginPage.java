@@ -77,20 +77,19 @@ public class LoginPage {
 
                 if (user != null) {
                     String role = user.getRole();
-                    String name = user.getUsername();
 
-                    JOptionPane.showMessageDialog(frame, "Welcome " + name);
+                    JOptionPane.showMessageDialog(frame, "Welcome " + user.getUsername());
 
                     frame.dispose();
 
                     if (role.equals("Manager")) {
-                        new ManagerMenu(name);
+                        new ManagerMenu(user);
                     } else if (role.equals("CounterStaff")) {
-                        new CounterStaffMenu(name);
+                        new CounterStaffMenu(user);
                     } else if (role.equals("Technician")) {
-                        new TechnicianMenu(name);
+                        new TechnicianMenu(user);
                     } else if (role.equals("Customer")) {
-                        new CustomerMenu(name);
+                        new CustomerMenu(user);
                     } else {
                         JOptionPane.showMessageDialog(null, "Unknown role!");
                     }
