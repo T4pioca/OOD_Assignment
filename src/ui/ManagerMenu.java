@@ -1,10 +1,11 @@
 package ui;
 
 import javax.swing.*;
+import model.User;
 
 public class ManagerMenu {
 
-    public ManagerMenu(String username) {
+    public ManagerMenu(User user) {
 
         JFrame frame = new JFrame("Manager Menu");
         frame.setSize(500, 380);
@@ -13,31 +14,39 @@ public class ManagerMenu {
         frame.setLocationRelativeTo(null);
 
         // Welcome Label
-        JLabel welcomeLabel = new JLabel("Welcome Manager, " + username);
+        JLabel welcomeLabel = new JLabel("Welcome Manager, " + user.getUsername());
         welcomeLabel.setBounds(120, 30, 300, 25);
         frame.add(welcomeLabel);
 
         // Buttons
+        JButton btnProfile = new JButton("Edit Profile");
+        btnProfile.setBounds(150, 80, 200, 30);
+        frame.add(btnProfile);
+        
         JButton btnManageStaff = new JButton("Manage Staff (CRUD)");
-        btnManageStaff.setBounds(150, 80, 200, 30);
+        btnManageStaff.setBounds(150, 120, 200, 30);
         frame.add(btnManageStaff);
 
         JButton btnSetPrice = new JButton("Set Service Prices");
-        btnSetPrice.setBounds(150, 120, 200, 30);
+        btnSetPrice.setBounds(150, 160, 200, 30);
         frame.add(btnSetPrice);
 
         JButton btnFeedback = new JButton("View Feedbacks");
-        btnFeedback.setBounds(150, 160, 200, 30);
+        btnFeedback.setBounds(150, 200, 200, 30);
         frame.add(btnFeedback);
 
         JButton btnReport = new JButton("View Reports");
-        btnReport.setBounds(150, 200, 200, 30);
+        btnReport.setBounds(150, 240, 200, 30);
         frame.add(btnReport);
 
         JButton btnLogout = new JButton("Logout");
-        btnLogout.setBounds(150, 240, 200, 30);
+        btnLogout.setBounds(150, 280, 200, 30);
         frame.add(btnLogout);
 
+        btnProfile.addActionListener(e-> {
+        	frame.dispose();
+        	new EditProfile(user);
+        });
         // Logout action
         btnLogout.addActionListener(e -> {
             frame.dispose();

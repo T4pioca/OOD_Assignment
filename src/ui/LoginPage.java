@@ -30,20 +30,24 @@ public class LoginPage {
         JPasswordField passText = new JPasswordField();
         passText.setBounds(120, 70, 150, 25);
         frame.add(passText);
+        
+        JCheckBox showPassword = new JCheckBox("Show Password");
+        showPassword.setBounds(120, 95, 150, 20);
+        frame.add(showPassword);
 
         JButton loginButton = new JButton("Login");
-        loginButton.setBounds(120, 110, 100, 30);
+        loginButton.setBounds(120, 120, 100, 30);
         frame.add(loginButton);
 
         JButton registerButton = new JButton("New user? Register here");
-        registerButton.setBounds(90, 150, 180, 25);
+        registerButton.setBounds(90, 160, 180, 25);
         registerButton.setBorderPainted(false);
         registerButton.setContentAreaFilled(false);
         registerButton.setForeground(java.awt.Color.BLUE);
         frame.add(registerButton);
 
         JButton forgotButton = new JButton("Forgot Password?");
-        forgotButton.setBounds(105, 180, 140, 25);
+        forgotButton.setBounds(105, 190, 140, 25);
         forgotButton.setBorderPainted(false);
         forgotButton.setContentAreaFilled(false);
         forgotButton.setForeground(java.awt.Color.RED);
@@ -73,20 +77,19 @@ public class LoginPage {
 
                 if (user != null) {
                     String role = user.getRole();
-                    String name = user.getUsername();
 
-                    JOptionPane.showMessageDialog(frame, "Welcome " + name);
+                    JOptionPane.showMessageDialog(frame, "Welcome " + user.getUsername());
 
                     frame.dispose();
 
                     if (role.equals("Manager")) {
-                        new ManagerMenu(name);
+                        new ManagerMenu(user);
                     } else if (role.equals("CounterStaff")) {
-                        new CounterStaffMenu(name);
+                        new CounterStaffMenu(user);
                     } else if (role.equals("Technician")) {
-                        new TechnicianMenu(name);
+                        new TechnicianMenu(user);
                     } else if (role.equals("Customer")) {
-                        new CustomerMenu(name);
+                        new CustomerMenu(user);
                     } else {
                         JOptionPane.showMessageDialog(null, "Unknown role!");
                     }
@@ -94,6 +97,16 @@ public class LoginPage {
                 } else {
                     JOptionPane.showMessageDialog(frame, "Invalid Username or Password!");
                 }
+            }
+        });
+        
+        char defaultChar = passText.getEchoChar();
+
+        showPassword.addActionListener(e -> {
+            if (showPassword.isSelected()) {
+                passText.setEchoChar((char) 0);
+            } else {
+                passText.setEchoChar(defaultChar);
             }
         });
 

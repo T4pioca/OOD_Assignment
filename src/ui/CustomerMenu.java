@@ -1,10 +1,11 @@
 package ui;
 
 import javax.swing.*;
+import model.User;
 
 public class CustomerMenu {
 
-    public CustomerMenu(String username) {
+    public CustomerMenu(User user) {
 
         JFrame frame = new JFrame("Customer Menu");
         frame.setSize(450, 350);
@@ -13,7 +14,7 @@ public class CustomerMenu {
         frame.setLocationRelativeTo(null);
 
         // Welcome Label
-        JLabel welcomeLabel = new JLabel("Welcome Customer, " + username);
+        JLabel welcomeLabel = new JLabel("Welcome Customer, " + user.getUsername());
         welcomeLabel.setBounds(100, 30, 300, 25);
         frame.add(welcomeLabel);
 
@@ -38,6 +39,10 @@ public class CustomerMenu {
         btnLogout.setBounds(130, 240, 180, 30);
         frame.add(btnLogout);
 
+        btnProfile.addActionListener(e -> {
+        	frame.dispose();
+        	new EditProfile(user);
+        });
         // Logout action
         btnLogout.addActionListener(e -> {
             frame.dispose();

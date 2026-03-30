@@ -10,9 +10,10 @@ public class User {
     private String securityQuestion;
     private String securityAnswer;
     private String role;
+    private String status;
 
     public User(int id, String username, String password, String phone,
-                String email, String securityQuestion, String securityAnswer, String role) {
+                String email, String securityQuestion, String securityAnswer, String role, String status) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -21,6 +22,7 @@ public class User {
         this.securityQuestion = securityQuestion;
         this.securityAnswer = securityAnswer;
         this.role = role;
+        this.status = status;
     }
 
     public int getId() {
@@ -54,6 +56,10 @@ public class User {
     public String getRole() {
         return role;
     }
+    
+    public String getStatus() {
+    	return status;
+    }
 
     // Setters (optional if you need update)
     public void setPassword(String password) {
@@ -70,6 +76,18 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+    
+    public void setSecurityQuestion(String securityQuestion) {
+    	this.securityQuestion = securityQuestion;
+    }
+    
+    public void setSecurityAnswer(String securityAnswer) {
+    	this.securityAnswer = securityAnswer;
+    }
+    
+    public void setStatus(String status) {
+    	this.status = status;
     }
 
     // Optional: display info

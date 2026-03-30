@@ -17,11 +17,12 @@ public class AuthService {
             String line;
 
             while ((line = reader.readLine()) != null) {
-                String[] user = line.split(",");
+                String[] user = line.split("\\|");
 
-                if (user.length >= 8 &&
+                if (user.length >= 9 &&
                     user[1].equals(username) &&
-                    user[2].equals(password)) {
+                    user[2].equals(password) &&
+                    user[8].equalsIgnoreCase("Active")) {
 
                 	return new User(
                     	Integer.parseInt(user[0]),
@@ -31,7 +32,8 @@ public class AuthService {
                     	user[4],
                     	user[5],
                     	user[6],
-                    	user[7]
+                    	user[7],
+                    	user[8]
                 	);
                 }
             }
@@ -61,8 +63,8 @@ public class AuthService {
             int newId = getNextUserId(file);
 
             try (FileWriter writer = new FileWriter(file, true)) {
-                writer.write(newId + "," + username + "," + password + "," + phone + "," +
-                             email + "," + securityQuestion + "," + securityAnswer + "," + role + "\n");
+                writer.write(newId + "|" + username + "|" + password + "|" + phone + "|" +
+                             email + "|" + securityQuestion + "|" + securityAnswer + "|" + role + "|Active\n");
             }
 
             return true;
@@ -77,7 +79,7 @@ public class AuthService {
             String line;
 
             while ((line = reader.readLine()) != null) {
-                String[] user = line.split(",");
+                String[] user = line.split("\\|");
                 if (user.length >= 2 && user[1].equalsIgnoreCase(username)) {
                     return true;
                 }
@@ -93,7 +95,7 @@ public class AuthService {
             String line;
 
             while ((line = reader.readLine()) != null) {
-                String[] user = line.split(",");
+                String[] user = line.split("\\|");
                 if (user.length >= 1) {
                     lastId = Integer.parseInt(user[0]);
                 }
@@ -110,7 +112,7 @@ public class AuthService {
             String line;
 
             while ((line = reader.readLine()) != null) {
-                String[] user = line.split(",");
+                String[] user = line.split("\\|");
 
                 if (user.length >= 7 && user[1].equalsIgnoreCase(username)) {
                     return user[5];
@@ -133,7 +135,7 @@ public class AuthService {
             String line;
 
             while ((line = reader.readLine()) != null) {
-                String[] user = line.split(",");
+                String[] user = line.split("\\|");
 
                 if (user.length >= 7 && user[1].equalsIgnoreCase(username)) {
                     userFound = true;
@@ -141,8 +143,8 @@ public class AuthService {
                     if (user[6].equalsIgnoreCase(answer)) {
                         answerCorrect = true;
 
-                        lines.add(user[0] + "," + user[1] + "," + newPassword + "," +
-                                  user[3] + "," + user[4] + "," + user[5] + "," + user[6] + "," + user[7]);
+                        lines.add(user[0] + "|" + user[1] + "|" + newPassword + "|" +
+                                  user[3] + "|" + user[4] + "|" + user[5] + "|" + user[6] + "|" + user[7] + "|" + user[8]);
                     } else {
                         lines.add(line);
                     }
