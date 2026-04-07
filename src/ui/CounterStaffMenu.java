@@ -43,6 +43,11 @@ public class CounterStaffMenu {
         	frame.dispose();
         	new EditProfile(user);
         });
+        
+        btnCustomer.addActionListener(e -> {
+        	frame.dispose();
+        	new ManageCustomer(user);
+        });
 
         btnLogout.addActionListener(e -> {
             frame.dispose();
