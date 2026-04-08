@@ -12,7 +12,7 @@ public class ManageCustomer {
 	private ArrayList<User> allUsers = new ArrayList<>();
     private ArrayList<User> list = new ArrayList<>();
     private DefaultTableModel model;
-    private final String file = "C:\\Users\\CJSHENG\\eclipse-workspace\\OOD_Assignment\\data\\users.txt";
+    private final String file = "data/users.txt";
     
     public ManageCustomer(User user) {
 
