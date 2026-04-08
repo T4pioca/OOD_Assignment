@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
+import java.awt.Color;
 
 public class ManageCustomer {
 
@@ -20,65 +21,71 @@ public class ManageCustomer {
         f.setSize(800,420);
         f.setLayout(null);
         f.setLocationRelativeTo(null);
+        
+        JButton btnBack = new JButton("Back");
+        btnBack.setBounds(30, 0, 90, 30);
+        f.add(btnBack);
 
         JLabel l1 = new JLabel("Username");
         l1.setBounds(30,20,100,25);
         f.add(l1);
 
         JTextField tfUsername = new JTextField();
-        tfUsername.setBounds(150,20,150,25);
+        tfUsername.setBounds(150,20,200,25);
         f.add(tfUsername);
 
         JLabel l2 = new JLabel("Password");
-        l2.setBounds(30,60,100,25);
+        l2.setBounds(380,20,100,25);
         f.add(l2);
 
         JTextField tfPassword = new JTextField();
-        tfPassword.setBounds(150,60,150,25);
+        tfPassword.setBounds(500,20,200,25);
         f.add(tfPassword);
 
         JLabel l3 = new JLabel("Phone");
-        l3.setBounds(30,100,100,25);
+        l3.setBounds(30,60,100,25);
         f.add(l3);
 
         JTextField tfPhone = new JTextField();
-        tfPhone.setBounds(150,100,150,25);
+        tfPhone.setBounds(150,60,200,25);
         f.add(tfPhone);
 
         JLabel l4 = new JLabel("Email");
-        l4.setBounds(30,140,100,25);
+        l4.setBounds(380,60,100,25);
         f.add(l4);
 
         JTextField tfEmail = new JTextField();
-        tfEmail.setBounds(150,140,150,25);
+        tfEmail.setBounds(500,60,200,25);
         f.add(tfEmail);
 
         JButton addBtn = new JButton("Add");
-        addBtn.setBounds(30, 190, 80, 30);
+        addBtn.setBounds(30, 100, 90, 30);
+        addBtn.setBackground(new Color(102, 204, 255));
+        addBtn.setForeground(Color.WHITE);
         f.add(addBtn);
 
         JButton updBtn = new JButton("Update");
-        updBtn.setBounds(120, 190, 80, 30);
+        updBtn.setBounds(130, 100, 90, 30);
         f.add(updBtn);
 
         JButton activateBtn = new JButton("Activate");
-        activateBtn.setBounds(210, 190, 90, 30);
+        activateBtn.setBounds(230, 100, 100, 30);
         f.add(activateBtn);
 
         JButton deactivateBtn = new JButton("Deactivate");
-        deactivateBtn.setBounds(310, 190, 100, 30);
+        deactivateBtn.setBounds(340, 100, 110, 30);
         f.add(deactivateBtn);
         
-        JButton btnBack = new JButton("Back");
-        btnBack.setBounds(330, 190, 120, 30);
-        f.add(btnBack);
-
+        JButton clearBtn = new JButton("Clear");
+        clearBtn.setBounds(560, 100, 90, 30); 
+        f.add(clearBtn);
+        
         model = new DefaultTableModel();
         model.setColumnIdentifiers(new String[]{"ID","Username","Phone","Email","Status"});
 
         JTable table = new JTable(model);
         JScrollPane sp = new JScrollPane(table);
-        sp.setBounds(330,20,380,300);
+        sp.setBounds(30,160,720,150);
         f.add(sp);
 
         loadCustomers();
@@ -179,6 +186,14 @@ public class ManageCustomer {
             } else if (user.getRole().equals("Customer")) {
                 new CustomerMenu(user);
             }
+        });
+        
+        clearBtn.addActionListener(e -> {
+            tfUsername.setText("");
+            tfPassword.setText("");
+            tfPhone.setText("");
+            tfEmail.setText("");
+            table.clearSelection(); // optional: deselect any selected row
         });
 
         f.setVisible(true);
