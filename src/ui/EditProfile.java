@@ -182,7 +182,7 @@ public class EditProfile {
         frame.setVisible(true);
     }
 
-    private boolean updateProfile(int userId, String phone, String email, String password,
+    private boolean updateProfile(String userId, String phone, String email, String password,
                                   String securityQuestion, String securityAnswer) {
         File file = new File("data/users.txt");
         ArrayList<String> lines = new ArrayList<>();
@@ -193,7 +193,7 @@ public class EditProfile {
             while ((line = reader.readLine()) != null) {
                 String[] user = line.split("\\|");
 
-                if (user.length >= 9 && Integer.parseInt(user[0]) == userId) {
+                if (user.length >= 9 && user[0].equals(userId)) {
                     lines.add(user[0] + "|" + user[1] + "|" + password + "|" +
                               phone + "|" + email + "|" + securityQuestion + "|" +
                               securityAnswer + "|" + user[7] + "|" + user[8]);

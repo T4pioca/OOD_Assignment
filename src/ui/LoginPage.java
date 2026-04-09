@@ -68,7 +68,9 @@ public class LoginPage {
         });
 
         loginButton.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
+
                 String username = userText.getText().trim();
                 String password = new String(passText.getPassword()).trim();
 
@@ -76,28 +78,54 @@ public class LoginPage {
                 User user = authService.login(username, password);
 
                 if (user != null) {
+
+                    if (user.getStatus().equalsIgnoreCase("Inactive")) {
+
+                        JOptionPane.showMessageDialog(frame,
+                                "Your account is inactive. Please contact Counter Staff for assistant.");
+
+                        return;
+                    }
+
                     String role = user.getRole();
 
-                    JOptionPane.showMessageDialog(frame, "Welcome " + user.getUsername());
+                    JOptionPane.showMessageDialog(frame,
+                            "Welcome " + user.getUsername());
 
                     frame.dispose();
 
                     if (role.equals("Manager")) {
+
                         new ManagerMenu(user);
+
                     } else if (role.equals("CounterStaff")) {
+
                         new CounterStaffMenu(user);
+
                     } else if (role.equals("Technician")) {
+
                         new TechnicianMenu(user);
+
                     } else if (role.equals("Customer")) {
+
                         new CustomerMenu(user);
+
                     } else {
-                        JOptionPane.showMessageDialog(null, "Unknown role!");
+
+                        JOptionPane.showMessageDialog(null,
+                                "Unknown role!");
+
                     }
 
                 } else {
-                    JOptionPane.showMessageDialog(frame, "Invalid Username or Password!");
+
+                    JOptionPane.showMessageDialog(frame,
+                            "Invalid Username or Password!");
+
                 }
+
             }
+
         });
         
         char defaultChar = passText.getEchoChar();

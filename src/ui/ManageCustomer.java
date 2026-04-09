@@ -24,8 +24,8 @@ public class ManageCustomer {
         f.setLayout(null);
         f.setLocationRelativeTo(null);
         
-        JButton btnBack = new JButton("Back");
-        btnBack.setBounds(30, 0, 90, 30);
+        JButton btnBack = new JButton("< Back");
+        btnBack.setBounds(30, 10, 90, 25);
         f.add(btnBack);
 
         JLabel l1 = new JLabel("Username");
@@ -103,7 +103,7 @@ public class ManageCustomer {
         loadCustomers();
 
         addBtn.addActionListener(e -> {
-            int id = getNextId();
+            String id = getNextId();
             User customer = new User(
                     id,
                     tfUsername.getText(),
@@ -236,7 +236,7 @@ public class ManageCustomer {
             while((line = br.readLine()) != null) {
                 String[] data = line.split("\\|");
                 User u = new User(
-                        Integer.parseInt(data[0]),
+                        data[0],
                         data[1],
                         data[2],
                         data[3],
@@ -270,7 +270,7 @@ public class ManageCustomer {
                 // Check if this user is a customer in the table list, update info
                 if(u.getRole().equalsIgnoreCase("Customer")) {
                     for(User updatedCustomer : list) {
-                        if(u.getId() == updatedCustomer.getId()) {
+                        if(u.getId().equals(updatedCustomer.getId())) {
                             u.setUsername(updatedCustomer.getUsername());
                             u.setPassword(updatedCustomer.getPassword());
                             u.setPhone(updatedCustomer.getPhone());
@@ -299,9 +299,26 @@ public class ManageCustomer {
         }
     }
 
-    private int getNextId() {
+    private String getNextId() {
+
         int max = 0;
-        for(User u : list) if(u.getId() > max) max = u.getId();
-        return max + 1;
+
+        for(User u : allUsers) {
+
+            if(u.getRole().equalsIgnoreCase("Customer")) {
+
+                String id = u.getId(); 
+
+                try {
+                    int num = Integer.parseInt(id.substring(1));
+
+                    if(num > max)
+                        max = num;
+
+                } catch(Exception e) {}
+            }
+        }
+
+        return String.format("C%03d", max + 1);
     }
 }

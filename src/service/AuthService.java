@@ -21,11 +21,10 @@ public class AuthService {
 
                 if (user.length >= 9 &&
                     user[1].equals(username) &&
-                    user[2].equals(password) &&
-                    user[8].equalsIgnoreCase("Active")) {
+                    user[2].equals(password)) {
 
                 	return new User(
-                    	Integer.parseInt(user[0]),
+                    	user[0],
                     	user[1],
                     	user[2],
                     	user[3],
@@ -60,7 +59,7 @@ public class AuthService {
                 return false;
             }
 
-            int newId = getNextUserId(file);
+            String newId = getNextUserId(file);
 
             try (FileWriter writer = new FileWriter(file, true)) {
                 writer.write(newId + "|" + username + "|" + password + "|" + phone + "|" +
@@ -88,21 +87,28 @@ public class AuthService {
         return false;
     }
 
-    private int getNextUserId(File file) throws IOException {
-        int lastId = 0;
+    private String getNextUserId(File file) throws IOException {
+
+        int lastNum = 0;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
 
             while ((line = reader.readLine()) != null) {
                 String[] user = line.split("\\|");
+
                 if (user.length >= 1) {
-                    lastId = Integer.parseInt(user[0]);
+
+                    String id = user[0].substring(1);
+                    lastNum = Integer.parseInt(id);
                 }
             }
         }
 
-        return lastId + 1;
+        int newNum = lastNum + 1;
+
+        // format: U001, U002, U003
+        return String.format("U%03d", newNum);
     }
     
     public String getSecurityQuestion(String username) {

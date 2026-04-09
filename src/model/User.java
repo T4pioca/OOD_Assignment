@@ -2,7 +2,7 @@ package model;
 
 public class User {
 
-    private int id;
+    private String id;
     private String username;
     private String password;
     private String phone;
@@ -12,7 +12,7 @@ public class User {
     private String role;
     private String status;
 
-    public User(int id, String username, String password, String phone,
+    public User(String id, String username, String password, String phone,
                 String email, String securityQuestion, String securityAnswer, String role, String status) {
         this.id = id;
         this.username = username;
@@ -25,7 +25,7 @@ public class User {
         this.status = status;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
