@@ -43,10 +43,36 @@ public class ManagerMenu {
         btnLogout.setBounds(150, 280, 200, 30);
         frame.add(btnLogout);
 
-        btnProfile.addActionListener(e-> {
+        // ActionListener: Edit Profile
+        btnProfile.addActionListener(e -> {
         	frame.dispose();
         	new EditProfile(user);
         });
+
+        // ActionListener: Manage Staff → opens ManageStaffWindow
+        btnManageStaff.addActionListener(e -> {
+            frame.dispose();
+            new ManageStaffWindow(user);
+        });
+
+        // ActionListener: Set Service Prices → opens SetPricesWindow
+        btnSetPrice.addActionListener(e -> {
+            frame.dispose();
+            new SetPricesWindow(user);
+        });
+
+        // ActionListener: View Feedbacks → opens ViewFeedbacksWindow
+        btnFeedback.addActionListener(e -> {
+            frame.dispose();
+            new ViewFeedbacksWindow(user);
+        });
+
+        // ActionListener: View Reports → opens ViewReportsWindow
+        btnReport.addActionListener(e -> {
+            frame.dispose();
+            new ViewReportsWindow(user);
+        });
+
         // Logout action
         btnLogout.addActionListener(e -> {
             frame.dispose();
