@@ -1,2 +1,17 @@
+# Build output
 bin/
 *.class
+
+# Eclipse junk that shouldn't be tracked (root .classpath/.project are ekpt)
+**/bin/
+src/.classpath
+src/.project
+src/**/.gitignore
+
+#OS junk
+.DS_Store
+Thumbs.db
+
+#IDE workspace junk
+.metadata/
+*.tmp
